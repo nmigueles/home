@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  api-gateway:
+    build:
+      dockerfile: ./service.api-gateway/prod.dockerfile
+      context: .
+    volumes:
+      - ./service.api-gateway/config.prod.yaml:/config/config.yaml
+    ports:
+      - 7000:80
+
+  service.controller.switch:
+    build:
+      dockerfile: ./service.controller.switch/dev.dockerfile
+      context: .
+    volumes:
+      - ./service.controller.switch:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7001:3000
+    environment:
+      NODE_ENV: development
+      SWITCH_IP: 192.168.0.10

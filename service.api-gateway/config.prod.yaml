@@ -1,0 +1,11 @@
+apis:
+  service.controller.switch:
+    name: Switch Controller
+    prefix: service.controller.switch
+    upstream_url: http://192.168.0.19:7001
+    allow_cross_origin: true
+    plugins:
+      - name: retry
+        enabled: true
+        config:
+          attempts: 3
