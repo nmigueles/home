@@ -22,3 +22,17 @@ services:
     environment:
       NODE_ENV: development
       SWITCH_IP: 192.168.0.10
+
+  service.discord:
+    build:
+      dockerfile: ./service.discord/dev.dockerfile
+      context: .
+    volumes:
+      - ./service.discord:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7002:3000
+    env_file:
+      - ./service.discord/.env
+    environment:
+      NODE_ENV: development

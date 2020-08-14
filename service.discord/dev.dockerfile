@@ -3,13 +3,13 @@ FROM node:12-alpine
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY ./service.controller.switch/package*.json ./
+COPY ./service.discord/package*.json ./
 
 # Install app dependencies
 RUN npm i
 
 # Bundle app source
-COPY ./service.controller.switch .
+COPY ./service.discord .
 
 EXPOSE 3000
 

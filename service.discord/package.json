@@ -1,7 +1,7 @@
 {
-  "name": "service.controller.switch",
+  "name": "service.discord",
   "version": "1.0.0",
-  "description": "Controller for wifi switch.",
+  "description": "Service for interacting with discord.",
   "main": "index.js",
   "scripts": {
     "start": "micro",
