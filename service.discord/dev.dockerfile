@@ -11,6 +11,6 @@ RUN npm i
 # Bundle app source
 COPY ./service.discord .
 
-EXPOSE 3000
+#EXPOSE 3000
 
 CMD [ "npm", "run", "start" ]

@@ -21,7 +21,6 @@ services:
       - 7001:3000
     environment:
       NODE_ENV: development
-      SWITCH_IP: 192.168.0.10
 
   service.discord:
     build:
