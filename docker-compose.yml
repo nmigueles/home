@@ -35,3 +35,17 @@ services:
       - ./service.discord/.env
     environment:
       NODE_ENV: development
+
+  service.spotify:
+    build:
+      dockerfile: ./service.spotify/dev.dockerfile
+      context: .
+    volumes:
+      - ./service.spotify:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7003:3000
+    env_file:
+      - ./service.spotify/.env
+    environment:
+      NODE_ENV: development

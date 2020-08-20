@@ -1,7 +1,7 @@
 apis:
   service.controller.switch:
     name: Switch Controller
-    prefix: service.controller.switch
+    prefix: controller.switch
     upstream_url: http://192.168.0.19:7001
     allow_cross_origin: true
     plugins:
@@ -11,8 +11,18 @@ apis:
           attempts: 3
   service.discord:
     name: Discord Service
-    prefix: service.discord
+    prefix: discord
     upstream_url: http://192.168.0.19:7002
+    allow_cross_origin: false
+    plugins:
+      - name: retry
+        enabled: true
+        config:
+          attempts: 3
+  service.spotify:
+    name: Spotify Service
+    prefix: spotify
+    upstream_url: http://192.168.0.19:7003
     allow_cross_origin: false
     plugins:
       - name: retry
