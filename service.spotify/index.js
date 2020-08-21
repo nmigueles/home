@@ -7,42 +7,29 @@ const express = require('express');
 
 const { SpotifyController } = require('./api');
 
-// TODO MIDDLEWARE TO AUTOMATIC REFRESH THE TOKENS WHEN UNAUTHORIRED.
 const app = express();
 app.use(express.json());
 
 const spotify = new SpotifyController();
 
-app.get('/callback', async (req, res) => {
+app.post('/song/:song_id', async (req, res) => {
   try {
-    const code = req.query['code'];
-    spotify.authorize(code);
-
+    const { song_id } = req.params;
+    const data = await spotify.playSong(song_id);
     res.json({
       ok: true,
-      message: 'Authorizado, ya se puede cerrar esta ventana.',
+      data,
     });
   } catch (error) {
     res.json({ ok: false, error: error.message });
   }
 });
 
-app.get('/authorize', async (req, res) => {
+app.post('/playlist/:playlist_id', async (req, res) => {
   try {
-    res.redirect(spotify.getAuthorizeURL());
-  } catch (error) {
-    res.json({ ok: false, error: error.message });
-  }
-});
-
-app.get('/refreshToken', async (req, res) => {
-  try {
-    const { expiresIn } = await spotify.refreshToken();
-
-    res.json({
-      ok: true,
-      expiresIn,
-    });
+    const { playlist_id } = req.params;
+    const data = await spotify.playPlaylist(playlist_id);
+    res.json(data);
   } catch (error) {
     res.json({ ok: false, error: error.message });
   }

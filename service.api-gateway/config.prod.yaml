@@ -13,7 +13,7 @@ apis:
     name: Discord Service
     prefix: discord
     upstream_url: http://192.168.0.19:7002
-    allow_cross_origin: false
+    allow_cross_origin: true
     plugins:
       - name: retry
         enabled: true
@@ -23,7 +23,7 @@ apis:
     name: Spotify Service
     prefix: spotify
     upstream_url: http://192.168.0.19:7003
-    allow_cross_origin: false
+    allow_cross_origin: true
     plugins:
       - name: retry
         enabled: true
