@@ -20,6 +20,11 @@ app.get('/login', async (req, res) => {
   res.redirect(spotify.getAuthorizeUrl());
 });
 
+app.get('/logout', async (req, res) => {
+  // TODO Erase content of the tokens file and remove from memory and set expired to undefined.
+  res.sendStatus(204);
+});
+
 app.get('/callback', async (req, res) => {
   const code = req.query['code'];
   if (code) {
