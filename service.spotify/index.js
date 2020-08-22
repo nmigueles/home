@@ -12,6 +12,29 @@ app.use(express.json());
 
 const spotify = new SpotifyController();
 
+app.get('/health', async (req, res) => {
+  res.sendStatus(200);
+});
+
+app.get('/login', async (req, res) => {
+  res.redirect(spotify.getAuthorizeUrl());
+});
+
+app.get('/callback', async (req, res) => {
+  const code = req.query['code'];
+  if (code) {
+    await spotify.callback(code);
+    res.json({ ok: true, message: 'You can close this window.' });
+  } else {
+    res.json({ ok: false, error: 'Code query parameter is required.' });
+  }
+});
+
+app.get('/debug', (req, res) => {
+  spotify.debug();
+  res.sendStatus(200);
+});
+
 app.post('/song/:song_id', async (req, res) => {
   try {
     const { song_id } = req.params;
@@ -71,4 +94,7 @@ app.get('/play', async (req, res) => {
   }
 });
 
-app.listen('3000', () => console.log('Spotify service started.'));
+(async () => {
+  await spotify.start();
+  app.listen('3000', () => console.log('Spotify service started.'));
+})();
