@@ -49,3 +49,22 @@ services:
       - ./service.spotify/.env
     environment:
       NODE_ENV: development
+
+  service.scheduler:
+    build:
+      dockerfile: ./service.scheduler/dev.dockerfile
+      context: .
+    volumes:
+      - ./service.scheduler:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 7004:3000
+    environment:
+      NODE_ENV: development
+
+  cron.scheduler-tick:
+    build:
+      dockerfile: ./cron.scheduler-tick/dev.dockerfile
+      context: .
+    volumes:
+      - ./cron.scheduler-tick/script.sh:/script.sh

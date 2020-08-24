@@ -1,0 +1,6 @@
+[
+  { "scene": "sunset", "at": "@sunset" },
+  { "scene": "sunrise", "at": "@sunrise" },
+  { "scene": "at 12am", "at": "12:00" },
+  { "scene": "at 6pm", "at": "18:00" }
+]

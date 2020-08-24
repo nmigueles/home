@@ -29,3 +29,13 @@ apis:
         enabled: true
         config:
           attempts: 3
+  service.scheduler:
+    name: Scheduler Service
+    prefix: scheduler
+    upstream_url: http://192.168.0.19:7004
+    allow_cross_origin: true
+    plugins:
+      - name: retry
+        enabled: true
+        config:
+          attempts: 3
