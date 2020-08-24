@@ -16,13 +16,8 @@ app.get('/health', async (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/login', async (req, res) => {
+app.get('/connect', async (req, res) => {
   res.redirect(spotify.getAuthorizeUrl());
-});
-
-app.get('/logout', async (req, res) => {
-  // TODO Erase content of the tokens file and remove from memory and set expired to undefined.
-  res.sendStatus(204);
 });
 
 app.get('/callback', async (req, res) => {
@@ -35,9 +30,35 @@ app.get('/callback', async (req, res) => {
   }
 });
 
+app.post('/disconnect', async (req, res) => {
+  const { ok, error } = spotify.disconnect();
+  res.json({
+    ok,
+    error,
+  });
+});
+
+app.get('/account', async (req, res) => {
+  try {
+    const { statusCode, body } = await spotify.getAttachedAccount();
+    if (statusCode === 200) res.json({ ok: true, linked: true, data: body });
+    else
+      throw new Error(`Failed communicating with spotify api, ${statusCode}`);
+  } catch (error) {
+    if (
+      error.message ===
+      'You need to link an account to use the spotify service.'
+    ) {
+      res.json({ ok: true, linked: false, message: 'No account linked.' });
+    } else {
+      res.json({ ok: false, error: error.message });
+    }
+  }
+});
+
 app.get('/debug', (req, res) => {
-  spotify.debug();
-  res.sendStatus(200);
+  const data = spotify.debug();
+  res.json({ data });
 });
 
 app.post('/song/:song_id', async (req, res) => {

@@ -60,11 +60,26 @@ class SpotifyController {
   }
 
   debug() {
-    auth.debug();
+    return auth.debug();
   }
 
   getAuthorizeUrl() {
     return auth.getAuthorizeUrl();
+  }
+
+  disconnect() {
+    try {
+      auth.detachAccount();
+      return { ok: true };
+    } catch (error) {
+      return { ok: false, error };
+    }
+  }
+
+  async getAttachedAccount() {
+    const api = await this.apiBuilder();
+    const data = await api.getMe();
+    return data;
   }
 
   async playSong(songId) {

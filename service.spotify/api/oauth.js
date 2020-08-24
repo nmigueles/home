@@ -15,8 +15,6 @@ class SpotifyOauth {
 
   constructor(opts) {
     if (opts) this.config(opts);
-
-    if (!this.callback) throw new Error('The callback options is required.');
   }
 
   config(opts) {
@@ -25,6 +23,8 @@ class SpotifyOauth {
     if (opts.path) this.path = opts.path;
     if (opts.callback) this.callback = opts.callback;
     if (opts.scope) this.scope = opts.scope;
+
+    if (!this.callback) throw new Error('The callback options is required.');
   }
 
   getAuthorizeUrl() {
@@ -36,13 +36,23 @@ class SpotifyOauth {
     })}`;
   }
 
-  // Remove later
   debug() {
-    console.log({
+    return {
       linkedState: this.linkedState,
-      expires: this.expires,
-      diff: this.expires - new Date().getTime(),
-    });
+      secondsLeft: this.linkedState
+        ? (this.expires - new Date().getTime()) / 1000
+        : undefined,
+    };
+  }
+
+  detachAccount() {
+    this.tokens = undefined;
+    this.expires = undefined;
+    this.linkedState = false;
+    // Remove tokens from file.
+    if (this.path) {
+      this.writeTokensInFile({});
+    }
   }
 
   async tokenEndpointHandler(params) {
@@ -78,7 +88,7 @@ class SpotifyOauth {
             this.expires = new Date().getTime() + body.expires_in * 1000;
 
             if (this.path) {
-              fs.writeFileSync(this.path, JSON.stringify(this.tokens));
+              this.writeTokensInFile(this.tokens);
             }
 
             this.linkedState = true;
@@ -97,6 +107,10 @@ class SpotifyOauth {
     return JSON.parse(fs.readFileSync(this.path));
   }
 
+  writeTokensInFile(tokens) {
+    fs.writeFileSync(this.path, JSON.stringify(tokens));
+  }
+
   /**
    * Gets a Spotify access token.
    * @returns {Promise<string[]>}
@@ -109,7 +123,10 @@ class SpotifyOauth {
     }
     // Checks if access and refresh tokens have not been obtained, but there are tokens at a specified path
     if (!this.tokens && this.path && fs.existsSync(this.path)) {
-      this.tokens = this.getTokensInFile();
+      const tokens = this.getTokensInFile();
+      if (tokens.token && tokens.refresh) {
+        this.tokens = tokens;
+      }
     }
 
     if (this.tokens) return this.refresh();
@@ -120,7 +137,7 @@ class SpotifyOauth {
   /**
    * Refreshes the Spotify access token
    * and sets the tokens variable.
-   * @returns {Promise<string>}
+   * @returns {Promise<string[]>}
    */
   refresh() {
     // Refreshes the access token
@@ -130,6 +147,11 @@ class SpotifyOauth {
     });
   }
 
+  /**
+   * Retrieves the Spotify access token
+   * and sets the tokens variable.
+   * @returns {Promise<string[]>}
+   */
   authorize(code) {
     return this.tokenEndpointHandler({
       code,
