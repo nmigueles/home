@@ -1,4 +1,5 @@
 # Logs
+log
 logs
 *.log
 npm-debug.log*
@@ -104,3 +105,13 @@ dist
 .tern-port
 
 tokens.json
+
+data/
+
+*.db
+
+.npmrc
+
+vendor/
+
+/log/

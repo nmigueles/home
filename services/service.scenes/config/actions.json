@@ -1,0 +1,35 @@
+[
+  {
+    "name": "send-message",
+    "description": "Send discord message",
+    "controller": "discord",
+    "inputs": {
+      "content": {
+        "value": "Message to send",
+        "type": "string"
+      }
+    }
+  },
+  {
+    "name": "switch",
+    "description": "Set switch state to on/off",
+    "controller": "controller.switch",
+    "inputs": {
+      "state": {
+        "value": 0,
+        "type": "boolean"
+      }
+    }
+  },
+  {
+    "name": "play-in-spotify",
+    "description": "Plays a song/playlist in spotify.",
+    "controller": "spotify",
+    "inputs": {
+      "spotify-uri": {
+        "value": "spotify:playlist:980980",
+        "type": "string"
+      }
+    }
+  }
+]

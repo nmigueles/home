@@ -1,0 +1,6 @@
+{
+  "switch": {
+    "name": "service.controller.switch"
+  },
+  "hue": "service.controller.hue"
+}

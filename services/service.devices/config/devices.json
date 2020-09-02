@@ -1,0 +1,8 @@
+[
+  {
+    "name": "Interruptor ESP-01",
+    "type": "switch",
+    "device_id": "esp01",
+    "controller": "switch"
+  }
+]
