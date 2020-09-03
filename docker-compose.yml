@@ -1,41 +1,21 @@
 version: '3.7'
 
 services:
-  filebeat:
-    build:
-      dockerfile: filebeat/Dockerfile
-      context: .
-    volumes:
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-
-  logstash:
-    build:
-      dockerfile: logstash/Dockerfile
-      context: .
-    volumes:
-      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./log:/var/log
-    ports:
-      - 7514:7514 # Syslog
-      - 5044:5044 # Beats
-
   api-gateway:
     build:
-      dockerfile: ./services/service.api-gateway/prod.dockerfile
+      dockerfile: ./services/api-gateway/prod.dockerfile
       context: .
     volumes:
-      - ./services/service.api-gateway/config.prod.yaml:/config/config.yaml
+      - ./services/api-gateway/config.prod.yaml:/config/config.yaml
     ports:
       - 7000:80
 
   service.controller.switch:
     build:
-      dockerfile: ./services/service.controller.switch/dev.dockerfile
+      dockerfile: ./services/controller.switch/dev.dockerfile
       context: .
     volumes:
-      - ./services/service.controller.switch:/usr/src/app
+      - ./services/controller.switch:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 7001:3000
@@ -44,38 +24,38 @@ services:
 
   service.discord:
     build:
-      dockerfile: ./services/service.discord/dev.dockerfile
+      dockerfile: ./services/discord/dev.dockerfile
       context: .
     volumes:
-      - ./services/service.discord:/usr/src/app
+      - ./services/discord:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 7002:3000
     env_file:
-      - ./services/service.discord/.env
+      - ./services/discord/.env
     environment:
       NODE_ENV: development
 
   service.spotify:
     build:
-      dockerfile: ./services/service.spotify/dev.dockerfile
+      dockerfile: ./services/spotify/dev.dockerfile
       context: .
     volumes:
-      - ./services/service.spotify:/usr/src/app
+      - ./services/spotify:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 7003:3000
     env_file:
-      - ./services/service.spotify/.env
+      - ./services/spotify/.env
     environment:
       NODE_ENV: development
 
   service.scheduler:
     build:
-      dockerfile: ./services/service.scheduler/dev.dockerfile
+      dockerfile: ./services/scheduler/dev.dockerfile
       context: .
     volumes:
-      - ./services/service.scheduler:/usr/src/app
+      - ./services/scheduler:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - 7004:3000
