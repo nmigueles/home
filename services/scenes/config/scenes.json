@@ -1,0 +1,10 @@
+[
+  {
+    "name": "sunset",
+    "description": "Get confy.",
+    "actions": [
+      { "name": "send-message", "input": "Grab some mate." },
+      { "name": "play-in-spotify", "input": "spotify:playlist:980980" }
+    ]
+  }
+]

@@ -1,5 +1,16 @@
 [
   {
+    "name": "action-template",
+    "description": "Description of action intended to be displayed.",
+    "controller": "controller-name",
+    "inputs": {
+      "name-of-user-input": {
+        "value": "Default value",
+        "type": "string"
+      }
+    }
+  },
+  {
     "name": "send-message",
     "description": "Send discord message",
     "controller": "discord",
