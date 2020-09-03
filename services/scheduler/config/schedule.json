@@ -1,14 +1,5 @@
 [
   { "scene": "sunset", "at": "@sunset" },
   { "scene": "sunrise", "at": "@sunrise" },
-  { "scene": "3PM", "at": "15:00" },
-  { "scene": "4PM", "at": "16:00" },
-  { "scene": "5PM", "at": "17:00" },
-  { "scene": "6PM", "at": "18:00" },
-  { "scene": "7PM", "at": "19:00" },
-  { "scene": "8PM", "at": "20:00" },
-  { "scene": "9PM", "at": "21:00" },
-  { "scene": "10PM", "at": "22:00" },
-  { "scene": "11PM", "at": "23:00" },
   { "scene": "12PM", "at": "00:00" }
 ]

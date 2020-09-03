@@ -3,6 +3,8 @@ process.env.NODE_ENV === 'development' && require('dotenv').config();
 assert(process.env.SPOTIFY_CLIENT_ID);
 assert(process.env.SPOTIFY_CLIENT_SECRET);
 
+const PORT = process.env.PORT || 80;
+
 const express = require('express');
 
 const { SpotifyController } = require('./api');
@@ -132,5 +134,5 @@ app.get('/play', async (req, res) => {
 
 (async () => {
   await spotify.start();
-  app.listen('3000', () => console.log('Spotify service started.'));
+  app.listen(PORT, () => console.log('Spotify service started.'));
 })();

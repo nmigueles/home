@@ -3,64 +3,64 @@ version: '3.7'
 services:
   api-gateway:
     build:
-      dockerfile: ./services/api-gateway/prod.dockerfile
+      dockerfile: ./services/api-gateway/dev.dockerfile
       context: .
     volumes:
-      - ./services/api-gateway/config.prod.yaml:/config/config.yaml
+      - ./services/api-gateway/config.dev.yaml:/config/config.yaml
     ports:
       - 7000:80
 
-  service.controller.switch:
+  controller.switch:
     build:
-      dockerfile: ./services/controller.switch/dev.dockerfile
+      dockerfile: ./dockerfiles/dev.node.dockerfile
       context: .
+      args:
+        service_name: controller.switch
     volumes:
       - ./services/controller.switch:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 7001:3000
-    environment:
-      NODE_ENV: development
+      - 7001:80
 
-  service.discord:
+  discord:
     build:
-      dockerfile: ./services/discord/dev.dockerfile
+      dockerfile: ./dockerfiles/dev.node.dockerfile
       context: .
+      args:
+        service_name: discord
     volumes:
       - ./services/discord:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 7002:3000
+      - 7002:80
     env_file:
       - ./services/discord/.env
-    environment:
-      NODE_ENV: development
 
-  service.spotify:
+  spotify:
     build:
-      dockerfile: ./services/spotify/dev.dockerfile
+      dockerfile: ./dockerfiles/dev.node.dockerfile
       context: .
+      args:
+        service_name: spotify
     volumes:
       - ./services/spotify:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 7003:3000
+      - 7003:80
     env_file:
       - ./services/spotify/.env
-    environment:
-      NODE_ENV: development
 
-  service.scheduler:
+  scheduler:
     build:
-      dockerfile: ./services/scheduler/dev.dockerfile
+      dockerfile: ./dockerfiles/dev.node.dockerfile
       context: .
+      args:
+        service_name: scheduler
     volumes:
       - ./services/scheduler:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 7004:3000
-    environment:
-      NODE_ENV: development
+      - 7004:80
 
   cron.scheduler-tick:
     build:

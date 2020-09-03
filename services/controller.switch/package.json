@@ -4,7 +4,7 @@
   "description": "Controller for wifi switch.",
   "main": "index.js",
   "scripts": {
-    "start": "micro",
+    "start": "node micro.js",
     "dev": "micro-dev"
   },
   "author": "Nicolás Migueles",

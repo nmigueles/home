@@ -1,1 +1,1 @@
-curl --fail -sSL http://service.scheduler:3000/tick 2>> /var/log/cron.log
+curl --fail -sSL http://scheduler/tick 2>> /var/log/cron.log
